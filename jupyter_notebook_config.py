@@ -21,6 +21,12 @@ c.NotebookApp.open_browser = False
 c.MultiKernelManager.default_kernel_name = 'python2'
 
 # sets a password if PASSWORD is set in the environment
+if not 'PASSWORD' in os.environ:
+    os.environ['PASSWORD']="JupyterPassword12345"
+
 if 'PASSWORD' in os.environ:
     c.NotebookApp.password = passwd(os.environ['PASSWORD'])
-    del os.environ['PASSWORD']
+    fp = open("/root/jupyter_password.txt", "w")
+    fp.write(os.environ['PASSWORD'])
+    fp.close()
+    #del os.environ['PASSWORD']
