@@ -9,7 +9,6 @@ echo "  ${0} jre-mvn-py3"
 baseDataFolder=~/data-docker
 MY_IP=`ip route get 1|awk '{print$NF;exit;}'`
 
-
 function displayPortainerURL() {
     port=${1}
     echo "... Go to: http://${MY_IP}:${port}"
@@ -24,7 +23,6 @@ function displayPortainerURL() {
 ##################################################
 #### ---- Mandatory: Change those ----
 ##################################################
-#docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder floydhub/dl-docker:cpu bash
 imageTag=${1:-"floydhub/dl-docker:cpu"}
 
 PACKAGE=`echo ${imageTag##*/}|tr "/\-: " "_"`
