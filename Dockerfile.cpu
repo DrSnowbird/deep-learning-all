@@ -230,6 +230,7 @@ RUN chmod +x /root/run_jupyter.sh
 EXPOSE 6006 8888
 
 VOLUME /data
+VOLUME /notebook
 
 WORKDIR "/root"
 
