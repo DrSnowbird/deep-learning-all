@@ -1,11 +1,14 @@
 #!/bin/bash -x
 
-echo "Usage: "
-echo "  ${0} [<repo-name/repo-tag>] "
-echo "e.g."
-echo "  ${0} jre-mvn-py3"
+if [ $# -lt 1 ]; then
+    echo "Usage: "
+    echo "  ${0} [<Jupyter_Password>] [<repo-name/repo-tag>] "
+    echo "e.g."
+    echo "  ${0} password123 floydhub/dl-docker:cpu"
+fi
+Password="${JupyterPassword:-password123}"
 
-## -- mostly, don't change this
+## -- mostly, don't change this --
 baseDataFolder=~/data-docker
 MY_IP=`ip route get 1|awk '{print$NF;exit;}'`
 
@@ -23,16 +26,21 @@ function displayPortainerURL() {
 ##################################################
 #### ---- Mandatory: Change those ----
 ##################################################
-imageTag=${1:-"floydhub/dl-docker:cpu"}
+imageTag=${2:-"floydhub/dl-docker:cpu"}
 
 PACKAGE=`echo ${imageTag##*/}|tr "/\-: " "_"`
 #version=cpu
 
 docker_volume_data1=/data
+docker_volume_data2=/notebook
 local_docker_data1=${baseDataFolder}/${PACKAGE}/data
-#### ---- instance local data on the host ----
-mkdir -p ${local_docker_data1}
+local_docker_data2=${baseDataFolder}/${PACKAGE}/notebook
 
+#### ---- local data folders on the host ----
+mkdir -p ${local_docker_data1}
+mkdir -p ${local_docker_data2}
+
+#### ---- ports mapping ----
 docker_port1=6006
 docker_port2=8888
 
@@ -56,15 +64,15 @@ echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 #docker run --rm -P -d --name $instanceName $imageTag
 #docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder floydhub/dl-docker:cpu bash
-#set -x
-docker run \
+docker run --rm \
     -d \
     --name=${instanceName} \
+	-e PASSWORD="${Password}" \
     -p ${local_docker_port1}:${docker_port1} \
     -p ${local_docker_port2}:${docker_port2} \
     -v ${local_docker_data1}:${docker_volume_data1} \
+    -v ${local_docker_data2}:${docker_volume_data2} \
     ${imageTag}
-#set +x
     
 echo ">>> Docker Status"
 docker ps -a | grep "${instanceName}"

@@ -21,7 +21,7 @@ c.NotebookApp.open_browser = False
 c.MultiKernelManager.default_kernel_name = 'python2'
 
 # sets a password if PASSWORD is set in the environment
-if not 'PASSWORD' in os.environ os.environ['PASSWORD'] is None:
+if not 'PASSWORD' in os.environ or os.environ['PASSWORD'] is None:
     os.environ['PASSWORD']="Password12345"
     
 if 'PASSWORD' in os.environ:
