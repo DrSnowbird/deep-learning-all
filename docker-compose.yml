@@ -1,0 +1,19 @@
+version: '3' 
+services:
+  docker-DL-cpu:
+    image: floydhub/dl-docker:cpu
+    build:
+      context: ./Dockerfile.cpu
+      args:
+        PASSWORD: ${JUPYTER_PASSWORD} 
+    container_name: docker-DL-cpu
+    environment:
+      PASSWORD=${JUPYTER_PASSWORD}
+    ports:
+      - 16006:6006
+      - 18888:8888
+    env_file:
+      - ./docker-DL.env
+    volumes:
+      - ./data:/data
+      - ./notebook:/notebook
