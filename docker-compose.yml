@@ -6,7 +6,7 @@ services:
       context: ./Dockerfile.cpu
     container_name: docker-DL-cpu
     environment:
-      PASSWORD=${JUPYTER_PASSWORD}
+      - PASSWORD=${JUPYTER_PASSWORD}
     ports:
       - 16006:6006
       - 18888:8888
@@ -15,18 +15,18 @@ services:
     volumes:
       - ./data:/data
       - ./notebook:/notebook
-  docker-DL-gpu:
-    image: floydhub/dl-docker:gpu
-    build:
-      context: ./Dockerfile.gpu
-    container_name: docker-DL-cpu
-    environment:
-      PASSWORD=${JUPYTER_PASSWORD}
-    ports:
-      - 16006:6006
-      - 18888:8888
-    env_file:
-      - ./docker-DL.env
-    volumes:
-      - ./data:/data
-      - ./notebook:/notebook
+#  docker-DL-gpu:
+#    image: floydhub/dl-docker:gpu
+#    build:
+#      context: ./Dockerfile.gpu
+#    container_name: docker-DL-cpu
+#    environment:
+#      - PASSWORD=${JUPYTER_PASSWORD}
+#    ports:
+#      - 16006:6006
+#      - 18888:8888
+#    env_file:
+#      - ./docker-DL.env
+#    volumes:
+#      - ./data:/data
+#      - ./notebook:/notebook
