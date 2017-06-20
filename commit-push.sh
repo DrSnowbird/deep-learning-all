@@ -6,7 +6,7 @@ echo "Usage: "
 echo "  ${0} <comment> <repo-name/repo-tag>"
 echo
 
-imageTag=openkbs/docker-DL
+imageTag=openkbs/docker-deep-learning
 version=cpu
 comment=${1:-"push ${imageTag}:${version}"}
 
