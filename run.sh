@@ -4,7 +4,7 @@ if [ $# -lt 1 ]; then
     echo "Usage: "
     echo "  ${0} [<Jupyter_Password>] [<repo-name/repo-tag>] "
     echo "e.g."
-    echo "  ${0} password123 floydhub/dl-docker:cpu"
+    echo "  ${0} password123 openkbs/docker-deep-learning"
 fi
 Password="${JupyterPassword:-password123}"
 
@@ -26,7 +26,7 @@ function displayPortainerURL() {
 ##################################################
 #### ---- Mandatory: Change those ----
 ##################################################
-imageTag=${2:-"floydhub/dl-docker:cpu"}
+imageTag=${2:-"openkbs/docker-deep-learning"}
 
 PACKAGE=`echo ${imageTag##*/}|tr "/\-: " "_"`
 #version=cpu

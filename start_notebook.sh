@@ -1,14 +1,14 @@
 #!/bin/bash -x
 
-mkdir -p $HOME/data-docker/dl_docker_cpu/notebook
-mkdir -p $HOME/data-docker/dl_docker_cpu/data
+mkdir -p $HOME/data-docker/docker-deep-learning/notebook
+mkdir -p $HOME/data-docker/docker-deep-learning/data
 
-docker build -t floydhub/dl-docker:cpu -f Dockerfile.cpu .
+docker build -t openkbs/docker-deep-learning .
 docker run -d \
-	--name dl_docker_cpu \
+	--name docker-deep-learning \
 	-p 18888:8888 -p 16006:6006 \
 	-e PASSWORD="password" \
-	-v $HOME/data-docker/dl_docker_cpu/data:/data \
-	-v $HOME/data-docker/dl_docker_cpu/notebook:/notebook \
-	floydhub/dl-docker:cpu
+	-v $HOME/data-docker/docker-deep-learning/data:/data \
+	-v $HOME/data-docker/docker-deep-learning/notebook:/notebook \
+	openkbs/docker-deep-learning
 

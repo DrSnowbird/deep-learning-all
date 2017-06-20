@@ -1,7 +1,7 @@
 version: '3' 
 services:
   docker-DL-cpu:
-    image: floydhub/dl-docker:cpu
+    image: openkbs/docker-deep-learning:cpu
     build:
       context: ./Dockerfile.cpu
     container_name: docker-DL-cpu
@@ -16,7 +16,7 @@ services:
       - ./data:/data
       - ./notebook:/notebook
 #  docker-DL-gpu:
-#    image: floydhub/dl-docker:gpu
+#    image: openkbs/docker-deep-learning:gpu
 #    build:
 #      context: ./Dockerfile.gpu
 #    container_name: docker-DL-cpu
