@@ -14,5 +14,5 @@
 # limitations under the License.
 # ==============================================================================
 
-
+tensorboard --logdir /logs &
 jupyter notebook --allow-root "$@" 

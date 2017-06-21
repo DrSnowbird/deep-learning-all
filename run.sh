@@ -4,7 +4,7 @@ if [ $# -lt 1 ]; then
     echo "Usage: "
     echo "  ${0} [<Jupyter_Password>] [<repo-name/repo-tag>] "
     echo "e.g."
-    echo "  ${0} password123 openkbs/docker-deep-learning"
+    echo "  ${0} password123 openkbs/docker-deep-learning:cpu"
 fi
 Password="${JupyterPassword:-password123}"
 
@@ -26,7 +26,7 @@ function displayPortainerURL() {
 ##################################################
 #### ---- Mandatory: Change those ----
 ##################################################
-imageTag=${2:-"openkbs/docker-deep-learning"}
+imageTag=${2:-"openkbs/docker-deep-learning:cpu"}
 
 PACKAGE=`echo ${imageTag##*/}|tr "/\-: " "_"`
 #version=cpu
@@ -82,4 +82,4 @@ echo "docker exec -it ${instanceName} /bin/bash"
 
 #### ---- Display IP:Port URL ----
 displayPortainerURL ${local_docker_port1}
-displayPortainerURL ${local_docker_port1}
+displayPortainerURL ${local_docker_port2}
