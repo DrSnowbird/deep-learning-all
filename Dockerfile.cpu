@@ -228,11 +228,13 @@ RUN chmod +x /root/run_jupyter.sh && \
     mkdir /data && \
     mkdir /logs
 
-# Copy sample notebooks.
-COPY notebooks /notebooks
-
+# Update tensoflow
 RUN pip install 'requests[security]' && \
     pip --no-cache-dir install --upgrade tensorflow
+
+# Copy sample notebooks.
+COPY notebooks /notebooks
+COPY notebooks /notebooks-all
 
 # Expose Ports for TensorBoard (6006), Ipython (8888)
 EXPOSE 6006 8888

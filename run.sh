@@ -26,15 +26,15 @@ function displayPortainerURL() {
 ##################################################
 #### ---- Mandatory: Change those ----
 ##################################################
-imageTag=${2:-"openkbs/docker-deep-learning:cpu"}
+imageTag=${2:-"openkbs/docker-deep-learning"}
+version=cpu
 
 PACKAGE=`echo ${imageTag##*/}|tr "/\-: " "_"`
-#version=cpu
 
 docker_volume_data1=/data
-docker_volume_data2=/notebook
+docker_volume_data2=/notebooks-all
 local_docker_data1=${baseDataFolder}/${PACKAGE}/data
-local_docker_data2=${baseDataFolder}/${PACKAGE}/notebook
+local_docker_data2=${baseDataFolder}/${PACKAGE}/notebooks
 
 #### ---- local data folders on the host ----
 mkdir -p ${local_docker_data1}
@@ -54,16 +54,15 @@ local_docker_port2=18888
 
 #instanceName=my-${2:-${imageTag%/*}}_$RANDOM
 #instanceName=my-${2:-${imageTag##*/}}
-instanceName=`echo ${imageTag}|tr "/\-: " "_"`
+instanceName=`echo "${imageTag}:${version}"|tr "/\-: " "_"`
 
 #### ----- RUN -------
 echo "To run: for example"
-echo "docker run -d --name ${instanceName} -v ${docker_data}:/${docker_volume_data} ${imageTag}"
+echo "docker run -d --name ${instanceName} -v ${docker_data}:/${docker_volume_data} ${imageTag}:${version}"
 echo "---------------------------------------------"
 echo "---- Starting a Container for ${imageTag}"
 echo "---------------------------------------------"
 #docker run --rm -P -d --name $instanceName $imageTag
-#docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder floydhub/dl-docker:cpu bash
 docker run --rm \
     -d \
     --name=${instanceName} \
@@ -72,13 +71,13 @@ docker run --rm \
     -p ${local_docker_port2}:${docker_port2} \
     -v ${local_docker_data1}:${docker_volume_data1} \
     -v ${local_docker_data2}:${docker_volume_data2} \
-    ${imageTag}
+    ${imageTag}:${version}
     
 echo ">>> Docker Status"
-docker ps -a | grep "${instanceName}"
+docker ps -a | grep "${instanceName}:${version}"
 echo "-----------------------------------------------"
 echo ">>> Docker Shell into Container `docker ps -lqa`"
-echo "docker exec -it ${instanceName} /bin/bash"
+echo "docker exec -it ${instanceName}:${version} /bin/bash"
 
 #### ---- Display IP:Port URL ----
 displayPortainerURL ${local_docker_port1}
