@@ -82,4 +82,4 @@ echo "docker exec -it ${instanceName} /bin/bash"
 
 #### ---- Display IP:Port URL ----
 displayPortainerURL ${local_docker_port1}
-displayPortainerURL ${local_docker_port1}
+displayPortainerURL ${local_docker_port2}
